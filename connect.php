@@ -1,16 +1,15 @@
 <?php
+$servername = "localhost";
 $username = "student_11903685";
 $password = "AQ4tcJWTm3lo";
-$hostname = "localhost";  
+$dbname = "student_11903685";  
 
 // Create connection
-$conn = mysqli_connect($hostname , $username, $password);
-$selected = mysql_select_db("Sensor Tabel", $conn);
+$conn = new mysqli($servername,$username,$password,$dbname);
 
 // Check connection
-if ($conn->connect_error) 
-{
-    die("Connection failed: " . $conn->connect_error);
+if ($conn->connect_error) {
+  die("Connection failed: " . $conn->connect_error);
 }
-    echo "Connected successfully";
+echo "Connected successfully";
 ?>
