@@ -89,6 +89,7 @@
 		xmlhttp.onreadystatechange = function() {
 			if( xmlhttp.readyState == 4 && xmlhttp.status == 200 ) {
 				data = JSON.parse(xmlhttp.responseText);
+				alert(data[1]);
 				drawChart(data.datum, data.temp, data.hum);
 			}
 		}
