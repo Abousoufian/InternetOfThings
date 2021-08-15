@@ -56,10 +56,10 @@
       </div>
       <br>
       begin
-      <input type="date" id="date1">
+      <input type="date" id="dateBegin">
       <br>
        einde
-      <input type="date" id="date2">
+      <input type="date" id="dateEnd">
       <input type="submit" onclick="filterTABEL()">
       <div id="table" class="table-responsive">
       <p id="userdata"></p>
@@ -73,8 +73,8 @@
 			$.ajax                                          //dit is de ajax stuk die de data naar de form php stuurt om te verwerken
 				({
 					type: "POST",
-					url: "http://11900456.pxl-ea-ict.be/iotFULL/form_submit.php",
-					data: { "temperature": temperature, "humidity": humidity},
+					url: "http://11903685.pxl-ea-ict.be/form.php",
+					data: { "Temperature": temperature, "Humidity": humidity},
 					success: function (data) {
 						$('#result').html(data);                    //de resultaten v/d ingevulde waardes worden gedisplayed TER CONTROLE
 						$('#contactform')[0].reset();               //idunno
@@ -148,8 +148,8 @@
     if($('#desc').is(":checked")) {
       $.ajax({
           type: 'POST',
-          url: 'http://11900456.pxl-ea-ict.be/iotFULL/filterT.php',
-          data: 'filter='+$('#filterK').val()+'&desc='+$('#desc').val()+'&date1='+$('#date1').val()+'&date2='+$('#date2').val(),
+          url: 'http://11903685.pxl-ea-ict.be/filter.php',
+          data: 'filter='+$('#filterK').val()+'&descending='+$('#desc').val()+'&dateBegin='+$('#dateBegin').val()+'&dateEnd='+$('#dateEnd').val(),
           beforeSend: function(){
               $('.loading-overlay').show();
           },
@@ -163,8 +163,8 @@
     else {
       $.ajax({
           type: 'POST',
-          url: 'http://11900456.pxl-ea-ict.be/iotFULL/filterT.php',
-          data: 'filter='+$('#filterK').val()+'&date1='+$('#date1').val()+'&date2='+$('#date2').val(),
+          url: 'http://11903685.pxl-ea-ict.be/filter.php',
+          data: 'filter='+$('#filterK').val()+'&dateBegin='+$('#dateBegin').val()+'&dateEnd='+$('#dateEnd').val(),
           beforeSend: function(){
               $('.loading-overlay').show();
           },
@@ -190,7 +190,7 @@
 			var to_date = $('#to_date').val();
 			if( from_date != '' && to_date != '' ) {
 				$.ajax({
-					url: "filter_graph.php",
+					url: "filter_grafiek.php",
 					method: "POST",
 					data:{from_date:from_date, to_date:to_date},
 					success:function(data) {

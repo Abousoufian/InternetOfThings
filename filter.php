@@ -1,4 +1,5 @@
 <?php
+/*
     // Connect to MySQL
     include("connect.php");
 
@@ -62,10 +63,10 @@
         $result = $conn->query($sql);
         //print de tabel
         if ($result->num_rows > 0) {
-          echo "<table class='table table-hover table-bordered'><thead><tr><th>sensor type</th><th>waarde</th><th>datum</th><th>IP adres</th></tr></thead><tbody>";
+          echo "<table class='table table-hover table-bordered'><thead><tr><th>sensor type</th><th>Value</th><th>datum</th><th>IP adres</th></tr></thead><tbody>";
 
           while ($row = $result->fetch_assoc()) {
-            echo "<tr><td>".$row["sensNaam"]."</td><td>" . $row["waarde"]. "</td><td>" . $row["date"]. "</td><td>".$row["IP"]."</td></tr>";
+            echo "<tr><td>".$row["sensName"]."</td><td>" . $row["Value"]. "</td><td>" . $row["Time"]. "</td><td>".$row["IP adress"]."</td></tr>";
           }
           echo "</tbody></table>";
         }
@@ -79,9 +80,9 @@
 
   //als er geen filter is gekozen
   else {
-    if (!empty($_POST['date1']) and !empty($_POST['dateEnd'])) {
+    if (!empty($_POST['dateBegin']) and !empty($_POST['dateEnd'])) {
       //$sql = "SELECT * FROM sensTest WHERE date >= '".$dateBegin."' AND date <= '".$dateEnd."' ORDER BY ID ".$descending."";
-      $sql = "SELECT Sensoren Tabel.sensorName, Data_Tabel.Value, Data_Tabel.Time, Data_Tabel.IP adress FROM Sensoren Tabel JOIN Data_Tabel ON Sensoren Tabel.ID = sensor_data.sensorID WHERE Data_Tabel.Time >= '".$dateBegin."' AND Data_Tabel.Time <= '".$dateEnd."' ORDER BY Data_Tabel.Time ".$descending." ";
+    #  $sql = "SELECT Sensoren Tabel.sensorName, Data_Tabel.Value, Data_Tabel.Time, Data_Tabel.IP adress FROM Sensoren Tabel JOIN Data_Tabel ON Sensoren Tabel.ID = sensor_data.sensorID WHERE Data_Tabel.Time >= '".$dateBegin."' AND Data_Tabel.Time <= '".$dateEnd."' ORDER BY Data_Tabel.Time "; #.$descending." ";
     }
     else{
       $sql = "SELECT Sensoren Tabel.sensorName, Data_Tabel.Value, Data_Tabel.Time, Data_Tabel.IP adress FROM Sensoren Tabel JOIN Data_Tabel ON Sensoren Tabel.ID = sensor_data.sensorID ORDER BY Data_Tabel.Time ".$descending." ";
@@ -89,10 +90,12 @@
 
     $result = $conn->query($sql);
 
-    if ($result->num_rows > 0) {
-      echo "<table class='table table-hover table-bordered'  style='text-align:center;'><thead><tr><th>sensor type</th><th>waarde</th><th>date</th><th>IP adres</th></tr></thead><tbody>";
-      while ($row = $result->fetch_assoc()) {
-        echo "<tr><td>".$row["Sensoren Tabel.sensorName"]."</td><td>" . $row["waarde"]. "</td><td>." . $row["date"]. ".</td><td>".$row["IP"]."</td></tr>";
+    if ($result->num_rows > 0) 
+    {
+      echo "<table class='table table-hover table-bordered'  style='text-align:center;'><thead><tr><th>sensor type</th><th>Value</th><th>Time</th><th>IP adres</th></tr></thead><tbody>";
+      while ($row = $result->fetch_assoc()) 
+      {
+        echo "<tr><td>".$row["sensorName"]."</td><td>" . $row["Value"]. "</td><td>." . $row["Time"]. ".</td><td>".$row["IP"]."</td></tr>";
       }
       echo "</tbody></table>";
     }
@@ -102,5 +105,5 @@
   }
 
 //$sql = "SELECT * FROM sensTest WHERE date >= '".$dateBegin."' AND date <= '".$dateEnd."' ORDER BY ID ".$descending."";
-
+*/
 ?>
