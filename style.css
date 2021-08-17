@@ -1,0 +1,15 @@
+body 
+{
+    background: linear-gradient(to bottom, #6699ff 0%, #ffff66 100%);
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-size: cover;
+}
+
+span 
+{
+    font-size: 20px;
+    border: 1px solid black;
+    text-align: center;
+    float: center;
+}

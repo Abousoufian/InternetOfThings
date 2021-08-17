@@ -1,4 +1,5 @@
 <?php
+
 // Connect to MySQL
 include("connect.php");
 
@@ -8,20 +9,20 @@ $sql2 = "SELECT Sensoren_Tabel.SensorName, Data_Tabel.Value,  Data_Tabel.Time FR
 $result1 = mysqli_query($conn,$sql1);
 $result2 = mysqli_query($conn,$sql2);
 
-while ($data1 = mysqli_fetch_array($result1) ) {
+while ($data1 = mysqli_fetch_array($result1))
+{
 		$temp[] = $data1['Value'];
 		$datum[] = $data1['Time'];
 }
 
-while ($data2 = mysqli_fetch_array($result2) ) {
-	
+while ($data2 = mysqli_fetch_array($result2))
+{
 		$hum[] = $data2['Value'];
 }
 
 mysqli_close($conn);
 
 $json = array('datum' => $datum, 'temp' => $temp, 'hum' => $hum);
-
 
 echo json_encode($json);
 ?>

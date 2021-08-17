@@ -1,5 +1,6 @@
 
 <?php
+
     // Connect to MySQL
     include("connect.php");
 

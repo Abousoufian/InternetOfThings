@@ -1,6 +1,6 @@
 <html>
 <head>
-    <title>Raspberry Pi sensorHat data</title>
+    <title>Internet Of Things</title>
 	<script src="https://code.jquery.com/jquery-3.3.1.js" integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60=" crossorigin="anonymous"></script>
 	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.1/Chart.min.js" ></script>
 	<script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
@@ -9,7 +9,9 @@
 </head>
 <body>
 	<div id="header" style="width:100%; height:100px; padding-top:25px;" >
-		<h1 id="headerText" ><span>RaspB sensorhat data</span></h1>
+		<h1 id="headerText" >
+			<span>weerstation</span>
+		</h1>
 	</div>
 	<div style="max-width:100%;" >
 		<div id="chart-container" >
@@ -18,7 +20,7 @@
 			</div>
 			<canvas id="myChart" width="70%" style="margin-top:30px;" ></canvas>
 		</div>
-		</div>
+	</div>
 		<div id="daterangediv" style="height:30px;" ><h1 id="daterangetext" >datum range</h1></div>
 		<div id="dateranger" ><br>
 				<div style="display:inline-block;  margin-right: 10px;">
@@ -65,29 +67,35 @@
       <p id="userdata"></p>
 	</div>
 	<script type="text/javascript" >
-	$(document).ready(function () {                     //als de document geladen is moet je dit uitvoeren
-		$('#indienen').click(function (e) {               // wanneer op de submit knop is gedrukt start de functie
+	$(document).ready(function ()
+	{                    
+		$('#indienen').click(function (e)
+		{               
 			e.preventDefault();
-			var temperature = $('#temperature').val();                    //pakt de gegevens die je ingevult hebt en steekt in een var
+			var temperature = $('#temperature').val();                    
 			var humidity = $('#humidity').val();
-			$.ajax                                          //dit is de ajax stuk die de data naar de form php stuurt om te verwerken
+			$.ajax                                          
 				({
 					type: "POST",
 					url: "http://11903685.pxl-ea-ict.be/form.php",
 					data: { "Temperature": temperature, "Humidity": humidity},
 					success: function (data) {
-						$('#result').html(data);                    //de resultaten v/d ingevulde waardes worden gedisplayed TER CONTROLE
-						$('#contactform')[0].reset();               //idunno
+						$('#result').html(data);
+						$('#contactform')[0].reset();               
 					}
 				});
 		});
 	});
+
 	//initial chart
 	updatechart();
-	function updatechart() {
+	function updatechart() 
+	{
 		var xmlhttp = new XMLHttpRequest(), data;
-		xmlhttp.onreadystatechange = function() {
-			if( xmlhttp.readyState == 4 && xmlhttp.status == 200 ) {
+		xmlhttp.onreadystatechange = function()
+		{
+			if( xmlhttp.readyState == 4 && xmlhttp.status == 200 )
+			{
 				data = JSON.parse(xmlhttp.responseText);
 				alert(data[1]);
 				drawChart(data.datum, data.temp, data.hum);
@@ -96,28 +104,32 @@
 		xmlhttp.open("GET","get_data_JSON.php",true);
 		xmlhttp.send();
 	}
-	function drawChart(labels, tempData, humData) {
+	function drawChart(labels, tempData, humData)
+	{
 		var ctx = document.getElementById("myChart").getContext('2d');
-		var myChart = new Chart(ctx, {
+		var myChart = new Chart(ctx,
+		{
 			type: 'line',
-			data: {
+			data:
+				{
 				labels: labels,
 				datasets: [{
-					label: 'Temperatuur',
+					label: 'Temperature',
 					data: tempData,
 					backgroundColor: ['rgba(222, 7, 157, 0.2)'],
 					borderColor: ['rgba(148, 0, 103,1)'],
 					borderWidth: 1
 				},
 				{
-					label: 'Vochtigheid',
+					label: 'Humidity',
 					data: humData,
 					backgroundColor: ['rgba(7, 217, 24, 0.2)'],
 					borderColor: ['rgba(4, 148, 16,1)'],
 					borderWidth: 1
 				}]
 			},
-			options: {
+			options: 
+			{
 				scales: {
 				yAxes: [{
 				ticks: {
@@ -125,7 +137,8 @@
 					}
 				}]
 			},
-				legend:{
+				legend:
+				{
 					position:'right',
 					labels:{
 						fontColor:"#000000",
