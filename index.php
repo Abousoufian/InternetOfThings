@@ -1,6 +1,7 @@
 <html>
 <head>
     <title>Internet Of Things</title>
+	<link rel="stylesheet" href="style.css">
 	<script src="https://code.jquery.com/jquery-3.3.1.js" integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60=" crossorigin="anonymous"></script>
 	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.1/Chart.min.js" ></script>
 	<script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
@@ -9,16 +10,16 @@
 </head>
 <body>
 	<div id="header" style="width:100%; height:100px; padding-top:25px;" >
-		<h1 id="headerText" >
+		<h1 style="text-align: center;">
 			<span>weerstation</span>
 		</h1>
 	</div>
 	<div style="max-width:100%;" >
 		<div id="chart-container" >
 			<div id="graph-header" style="max-width:100%; height:30px;" >
-				<h1 id="graph-interface" >grafiek</h1>
+				<h1 style="text-align: center;">grafiek</h1>
 			</div>
-			<canvas id="myChart" width="70%" style="margin-top:30px;" ></canvas>
+			<canvas id="myChart" width="25%" style="margin-top:30px;" ></canvas>
 		</div>
 	</div>
 		<div id="daterangediv" style="height:30px;" ><h1 id="daterangetext" >datum range</h1></div>
@@ -114,17 +115,17 @@
 				{
 				labels: labels,
 				datasets: [{
-					label: 'Temperature',
-					data: tempData,
-					backgroundColor: ['rgba(222, 7, 157, 0.2)'],
-					borderColor: ['rgba(148, 0, 103,1)'],
+					label: 'Humidity',
+					data: humData,
+					backgroundColor: ['rgba(0, 0, 255, 0.3)'],
+					borderColor: ['rgba(0, 0, 255,1)'],
 					borderWidth: 1
 				},
 				{
-					label: 'Humidity',
-					data: humData,
-					backgroundColor: ['rgba(7, 217, 24, 0.2)'],
-					borderColor: ['rgba(4, 148, 16,1)'],
+					label: 'Temperature',
+					data: tempData,
+					backgroundColor: ['rgba(255, 0, 0, 0.3)'],
+					borderColor: ['rgba(255, 0, 0,1)'],
 					borderWidth: 1
 				}]
 			},
@@ -151,44 +152,56 @@
 			},
 		});
 	}
-	//update grafiek elke 2 min
-	var updateChart = setInterval(function() {
+	//update graph every minute
+	var updateChart = setInterval(function() 
+	{
 		$('#myChart').remove();
 		$('#chart-container').append('<canvas id="myChart" width="70%" style="margin-top:30px;" ></canvas>');
 		updatechart();
-	},120000);
-  //filter tabel
-  function filterTABEL() {
-    if($('#desc').is(":checked")) {
-      $.ajax({
+	},60000);
+
+  //filter function
+  function filterTABEL()
+  {
+    if($('#desc').is(":checked")) 
+	{
+      $.ajax(
+		{
           type: 'POST',
           url: 'http://11903685.pxl-ea-ict.be/filter.php',
           data: 'filter='+$('#filterK').val()+'&descending='+$('#desc').val()+'&dateBegin='+$('#dateBegin').val()+'&dateEnd='+$('#dateEnd').val(),
-          beforeSend: function(){
-              $('.loading-overlay').show();
+          beforeSend: function()
+		  {
+            $('.loading-overlay').show();
           },
-          success:function(html){
-              $('.loading-overlay').hide();
-              $('#userdata').html(html);
+          success:function(html)
+		  {
+            $('.loading-overlay').hide();
+            $('#userdata').html(html);
           }
-      });
+      	});
     }
-    //als geen enkele filter is aangeduid gewoon de tabel printen
-    else {
-      $.ajax({
+    //when no filter is choosen
+    else 
+	{
+		$.ajax(
+		{
           type: 'POST',
           url: 'http://11903685.pxl-ea-ict.be/filter.php',
           data: 'filter='+$('#filterK').val()+'&dateBegin='+$('#dateBegin').val()+'&dateEnd='+$('#dateEnd').val(),
-          beforeSend: function(){
-              $('.loading-overlay').show();
-          },
-          success:function(html){
+			beforeSend: function()
+		  	{
+				$('.loading-overlay').show();
+			},
+        	success:function(html)
+		  	{
               $('.loading-overlay').hide();
               $('#userdata').html(html);
-          }
-      });
+			}
+      	});
     }
   }
+
 	//filter grafiek op datum
 	$(document).ready(function() {
 		$.datepicker.setDefaults({

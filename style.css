@@ -6,10 +6,4 @@ body
     background-size: cover;
 }
 
-span 
-{
-    font-size: 20px;
-    border: 1px solid black;
-    text-align: center;
-    float: center;
-}
+

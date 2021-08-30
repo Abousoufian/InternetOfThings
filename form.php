@@ -3,27 +3,8 @@
 // Connect to MySQL
 include("connect.php");
 
-function getUserIP() 
-{
-    if( array_key_exists('HTTP_X_FORWARDED_FOR', $_SERVER) && !empty($_SERVER['HTTP_X_FORWARDED_FOR'])) 
-    {
-        if (strpos($_SERVER['HTTP_X_FORWARDED_FOR'], ',')>0)
-        {
-            $addr = explode(",",$_SERVER['HTTP_X_FORWARDED_FOR']);
-            return trim($addr[0]);
-        } 
-        else 
-        {
-            return $_SERVER['HTTP_X_FORWARDED_FOR'];
-        }
-    }
-    else 
-    {
-        return $_SERVER['REMOTE_ADDR'];
-    }
-}
-
-$IP = getUserIP();
+//IP adress hard coded
+$IP = '192.168.0.149';
 
 //insert into database
 if(!empty($_POST)) 
@@ -40,6 +21,6 @@ if(!empty($_POST))
     echo "Time stamp : ".$dateS."</br>";
     echo "Temperature : ".$temp."°C</br>";
     echo "Humidity : ".$hum."%</br>";
-    echo "IP adress : ".$IP."%</br>";
+    echo "IP adress : ".$IP."</br>";
 }
 ?>
