@@ -1,6 +1,8 @@
 <html>
 <head>
     <title>Internet Of Things</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta charset="UTF-8">
 	<link rel="stylesheet" href="style.css">
 	<script src="https://code.jquery.com/jquery-3.3.1.js" integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60=" crossorigin="anonymous"></script>
 	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.1/Chart.min.js" ></script>
@@ -28,7 +30,7 @@
 					<input type="text" name="from_date" id="from_date" class="form-control" />
 				</div>
 				<div style="display:inline-block; margin-right: 20px;">
-					<input type="text" name="to-date" id="to_date" class="form-control" />
+					<input type="text" name="to_date" id="to_date" class="form-control" />
 				</div>
 				<div style="display:inline-block;">
 					<input type="button" name="filter" id="filter" class="button" value="filter" />
@@ -152,13 +154,13 @@
 			},
 		});
 	}
-	//update graph every minute
+	//update graph every 10 minutes
 	var updateChart = setInterval(function() 
 	{
 		$('#myChart').remove();
 		$('#chart-container').append('<canvas id="myChart" width="70%" style="margin-top:30px;" ></canvas>');
 		updatechart();
-	},60000);
+	},600000);
 
   //filter function
   function filterTABEL()
@@ -213,13 +215,14 @@
 		});
 		//zodra er op de filter knop gedrukt wordt
 		$('#filter').click(function() {
-			var from_date = $('#from_date').val();
-			var to_date = $('#to_date').val();
-			if( from_date != '' && to_date != '' ) {
+			$from_date = $('#from_date').val();
+			$to_date = $('#to_date').val();
+			if( $from_date != '' && $to_date != '' ) {
+				console.log('sending POST request');
 				$.ajax({
 					url: "filter_grafiek.php",
 					method: "POST",
-					data:{from_date:from_date, to_date:to_date},
+					data:{"from_date":$from_date, "to_date":$to_date},
 					success:function(data) {
 					var dataArrays = JSON.parse(data);
 					clearInterval(updateChart);
@@ -228,7 +231,8 @@
 					drawChart(dataArrays.datum, dataArrays.temp, dataArrays.hum);
 					}
 				});
-			}else {
+			}
+			else {
 				alert("please select a date!");
 			}
 		});

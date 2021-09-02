@@ -3,8 +3,28 @@ import threading
 import urllib2
 import socket
 from sense_hat import SenseHat
+import threading
+import time
 
 sense = SenseHat()
+
+class ThreadingFunction(object):
+    def __init__(self, fun, interval=1):
+        self.interval = interval
+        self.fun = fun
+        thread = threading.Thread(target=self.run, args=())
+        thread.daemon = True # Daemonize thread
+        thread.start() # Start the execution
+
+    def run(self):
+        """ Method that runs forever """
+        while True:
+        # Do something
+            if self.fun == 1:
+                sendTemperatureToServer()
+            elif self.fun == 2:
+                sendHumidityToServer()
+            time.sleep(self.interval)
 
 def get_ip():
     s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
@@ -73,7 +93,6 @@ def sendTemperatureToServer():
     readCPUTemperature()
     IP_adress = get_ip()
 
-    threading.Timer(10,sendTemperatureToServer).start()
     print("Sensing...")
     
     temperature = round(temperature,1)
@@ -89,7 +108,6 @@ def sendHumidityToServer():
     readHumidity()
     IP_adress = get_ip()
 
-    threading.Timer(13,sendHumidityToServer).start()
     print("Sensing...")    
     print(humidity)
     print(IP_adress)
@@ -97,6 +115,8 @@ def sendHumidityToServer():
     hum ="%.1f" %humidity
     urllib2.urlopen("http://11903685.pxl-ea-ict.be/Iot/add_data.php?ID=2&Value="+hum+"&IP_adress="+IP_adress).read()
 
+temp = ThreadingFunction(1,264)
+hum = ThreadingFunction(2,173)
 
-sendTemperatureToServer()
-sendHumidityToServer()
+while True:
+    time.sleep(1)

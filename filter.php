@@ -4,7 +4,7 @@
     include("connect.php");
 
     //disable notification
-    //error_reporting(error_reporting() & ~E_NOTICE);
+    error_reporting(error_reporting() & ~E_NOTICE);
 
     $filter = $_POST['filter']; 
     $descending = $_POST['descending'];   
